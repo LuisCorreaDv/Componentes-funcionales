@@ -7,16 +7,22 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 function FormSignUp() {
     const [name, setName] = useState("")
-    return <form>
+    const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
+    const [prom, setProm] = useState(true)
+    const [nov, setNov] = useState(true)
+
+    return <form onSubmit={(e) => {
+        e.preventDefault()
+        console.log({name, lastName, email, prom, nov})
+    }}>
         <TextField
             id="name"
             label="Nombre"
             variant="outlined"
             fullWidth
             margin='normal'
-            onChange={(e) => {
-                setName(e.target.value)
-            }}
+            onChange={(e) => setName(e.target.value)}
             value={name}
         />
         <TextField
@@ -25,6 +31,8 @@ function FormSignUp() {
             variant="outlined"
             fullWidth
             margin='normal'
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
         />
         <TextField
             id="email"
@@ -32,20 +40,24 @@ function FormSignUp() {
             variant="outlined"
             fullWidth
             margin='normal'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
         />
 
         {/* /Se ocupa FormGrup para que se pueda conectar el switch con el label */}
         <FormGroup>
             <FormControlLabel
                 control={<Switch
-                    defaultChecked
+                    checked={prom}
+                    onChange={(e) => setProm(e.target.checked)}
                 />} label="Promociones" />
             <FormControlLabel
                 control={<Switch
-                    defaultChecked
+                    checked={nov}
+                    onChange={(e) => setNov(e.target.checked)}
                 />} label="novedades" />
         </FormGroup>
-        <Button variant="contained" color="success">Registrarse</Button>
+        <Button variant="contained" color="success" type='submit'>Registrarse</Button>
     </form>
 }
 
