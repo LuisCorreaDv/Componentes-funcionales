@@ -5,7 +5,7 @@ import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-function FormSignUp({handleSubmit}) {
+function FormSignUp({ handleSubmit }) {
     const [name, setName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
@@ -19,13 +19,31 @@ function FormSignUp({handleSubmit}) {
         },
     })
 
+    function validarNombre(nombre) {
+        if (nombre.length >= 3) {
+            return {
+                name: {
+                    error: false,
+                    message: "",
+                },
+            }
+        } else {
+            return {
+                name: {
+                    error: true,
+                    message: "Deben ser al menos 3 caracteres",
+                },
+            }
+        }
+    }
+
     return <form onSubmit={(e) => {
         e.preventDefault()
         handleSubmit({
-            name, 
-            lastName, 
-            email, 
-            prom, 
+            name,
+            lastName,
+            email,
+            prom,
             nov
         })
     }}>
@@ -38,9 +56,16 @@ function FormSignUp({handleSubmit}) {
             onChange={(e) => setName(e.target.value)}
             value={name}
             error={errors.name.error}
-            helperText={errors.name.error 
-                ? errors.name.message 
-                : ""}
+            helperText={errors.name.error
+                ? errors.name.message
+                : ""
+            }
+            //Funcion que se manda llamar cuando se sale del input
+            onBlur={(e) =>
+                setErrors(
+                    validarNombre(e.target.value)
+                )
+            }
         />
         <TextField
             id="lastName"
